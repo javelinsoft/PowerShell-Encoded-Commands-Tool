@@ -34,7 +34,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             resize: none;
-			height: 30vh; /* Adjust the height as needed */
+            height: 30vh; /* Adjust the height as needed */
         }
 
         button {
@@ -48,10 +48,6 @@
 
         button:hover {
             background-color: #45a049;
-        }
-
-        .swap-button {
-            margin-left: 10px;
         }
 
         .copy-button {
@@ -69,41 +65,37 @@
     <div class="container">
         <h1>PowerShell EncodedCommand Tool</h1>
         <textarea id="inputTextArea" placeholder="Enter text to encode or decode"></textarea>
-        <button id="encodeDecodeButton" onclick="encodeDecode()">Decode</button>
-        <button class="swap-button" onclick="swapEncodeDecode()">↑↓</button>
+        <button id="encodeButton" onclick="encode()">Encode</button>
+        <button id="decodeButton" onclick="decode()">Decode</button>
         <textarea id="outputTextArea" placeholder="Result will appear here" readonly></textarea>
         <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
 
     <script>
-        function encodeDecode() {
+        function encode() {
             const inputText = document.getElementById('inputTextArea').value;
-            const button = document.getElementById('encodeDecodeButton');
             const outputTextArea = document.getElementById('outputTextArea');
 
-            if (button.innerText === 'Decode') {
-                // Decoding logic (from Base64 with UTF-16LE)
-                try {
-                    const utf16leDecodedText = new TextDecoder('utf-16le').decode(Uint8Array.from(atob(inputText), c => c.charCodeAt(0)));
-                    outputTextArea.value = utf16leDecodedText;
-                } catch (error) {
-                    outputTextArea.value = 'Invalid Base64 input';
-                }
-            } else {
-                // Encoding logic (to Base64 with UTF-16LE)
-                try {
-                    const utf16leEncodedText = encodeToBase64WithUTF16LE(inputText);
-                    outputTextArea.value = utf16leEncodedText;
-                } catch (error) {
-                    outputTextArea.value = 'Invalid input for encoding';
-                }
+            // Encoding logic (to Base64 with UTF-16LE)
+            try {
+                const utf16leEncodedText = encodeToBase64WithUTF16LE(inputText);
+                outputTextArea.value = utf16leEncodedText;
+            } catch (error) {
+                outputTextArea.value = 'Invalid input for encoding';
             }
         }
 
-        function swapEncodeDecode() {
-            const button = document.getElementById('encodeDecodeButton');
-            const buttonText = button.innerText;
-            button.innerText = buttonText === 'Decode' ? 'Encode' : 'Decode';
+        function decode() {
+            const inputText = document.getElementById('inputTextArea').value;
+            const outputTextArea = document.getElementById('outputTextArea');
+
+            // Decoding logic (from Base64 with UTF-16LE)
+            try {
+                const utf16leDecodedText = new TextDecoder('utf-16le').decode(Uint8Array.from(atob(inputText), c => c.charCodeAt(0)));
+                outputTextArea.value = utf16leDecodedText;
+            } catch (error) {
+                outputTextArea.value = 'Invalid Base64 input';
+            }
         }
 
         function copyToClipboard() {

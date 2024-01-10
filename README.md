@@ -31,6 +31,6 @@ powershell -encodedCommand <encoded_command_here>
 1. In the PowerShell console, paste the copied encoded command.
 2. Press `Enter` to execute the encoded PowerShell command.
 
-**Note:** Ensure that you have the necessary permissions to execute PowerShell commands on your system.
+**Note:** Ensure that you have the necessary permissions to execute PowerShell commands on your system.```
 
 ![encodedCommand.PNG](https://github.com/Javelinblog/PowerShell-Encoded-Commands-Tool/blob/main/encodedCommand.PNG?raw=true)

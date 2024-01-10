@@ -1,7 +1,6 @@
-# PowerShell-Encoded-Commands-Tool
-PowerShell Encoded Commands Tool
+# PowerShell Encoded Commands Tool
 
-# Tutorial: Running PowerShell EncodedCommands
+The PowerShell Encoded Commands Tool is a web-based utility designed to simplify the encoding and decoding of PowerShell commands using the EncodedCommand technique. This technique involves converting PowerShell commands into a base64-encoded format, making them less susceptible to detection and modification.  
 
 ## Prerequisites:
 

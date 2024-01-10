@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell EncodedCommand Tool</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+			height: 30vh; /* Adjust the height as needed */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .swap-button {
+            margin-left: 10px;
+        }
+
+        .copy-button {
+            margin-top: 10px;
+            background-color: #3498db;
+        }
+
+        .copy-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PowerShell EncodedCommand Tool</h1>
+        <textarea id="inputTextArea" placeholder="Enter text to encode or decode"></textarea>
+        <button id="encodeDecodeButton" onclick="encodeDecode()">Decode</button>
+        <button class="swap-button" onclick="swapEncodeDecode()">Swap</button>
+        <textarea id="outputTextArea" placeholder="Result will appear here" readonly></textarea>
+        <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <script>
+        function encodeDecode() {
+            const inputText = document.getElementById('inputTextArea').value;
+            const button = document.getElementById('encodeDecodeButton');
+            const outputTextArea = document.getElementById('outputTextArea');
+
+            if (button.innerText === 'Decode') {
+                // Decoding logic (from Base64 with UTF-16LE)
+                try {
+                    const utf16leDecodedText = new TextDecoder('utf-16le').decode(Uint8Array.from(atob(inputText), c => c.charCodeAt(0)));
+                    outputTextArea.value = utf16leDecodedText;
+                } catch (error) {
+                    outputTextArea.value = 'Invalid Base64 input';
+                }
+            } else {
+                // Encoding logic (to Base64 with UTF-16LE)
+                try {
+                    const utf16leEncodedText = encodeToBase64WithUTF16LE(inputText);
+                    outputTextArea.value = utf16leEncodedText;
+                } catch (error) {
+                    outputTextArea.value = 'Invalid input for encoding';
+                }
+            }
+        }
+
+        function swapEncodeDecode() {
+            const button = document.getElementById('encodeDecodeButton');
+            const buttonText = button.innerText;
+            button.innerText = buttonText === 'Decode' ? 'Encode' : 'Decode';
+        }
+
+        function copyToClipboard() {
+            const outputTextArea = document.getElementById('outputTextArea');
+            outputTextArea.select();
+            document.execCommand('copy');
+        }
+
+        function encodeToBase64WithUTF16LE(text) {
+            const utf16leBytes = [];
+            for (let i = 0; i < text.length; i++) {
+                const charCode = text.charCodeAt(i);
+                utf16leBytes.push(charCode & 0xFF, (charCode >> 8) & 0xFF);
+            }
+            const utf16leArray = new Uint8Array(utf16leBytes);
+            return btoa(String.fromCharCode(...utf16leArray));
+        }
+    </script>
+</body>
+
+</html>

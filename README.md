@@ -11,7 +11,7 @@ The PowerShell Encoded Commands Tool is a web-based utility designed to simplify
 ## Step 1: Create an Encoded PowerShell Command
 
 1. Open the web-based tool using a web browser:  
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/Javelinblog/PowerShell-Encoded-Commands-Tool/main/PowerShell.html
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/javelinsoft/PowerShell-Encoded-Commands-Tool/main/PowerShell.html
 2. Enter a PowerShell command or script into the input textarea.
 3. Click the "Encode" button to generate the encoded PowerShell command.
 4. Copy the encoded command from the output textarea.
